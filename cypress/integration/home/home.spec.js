@@ -1,4 +1,5 @@
-
+/// <reference types="cypress" />
+//var chai = reference;
 
 describe("Home page", () => {
     beforeEach(() => {
@@ -6,6 +7,7 @@ describe("Home page", () => {
     })
     it("header contains recipe heading with a message that there are no recipes", () => {
       cy.findByRole('heading').should('contain', 'My Recipes')
+      
       cy.get('p')
         .findByText('There are no recipes to list.')
         .should('exist')
@@ -21,7 +23,7 @@ describe("Home page", () => {
 
       it("contains a form with fields 'Recipe Name' and 'Recipe Instructions' after clicking the 'Add Recipe' button", () => {
         cy.findByRole('button').click();
-        expect(cy.findByRole('textbox', {name: /Recipe name/i})).toExist()
+        expect(cy.findByRole('textbox', {name: /Recipe name/i})).to.exist
         cy.findByRole('textbox', {name: /instructions/i}).should('exist')
       })
 
@@ -33,7 +35,7 @@ describe("Home page", () => {
       
         return cy.findByRole('button').click()
           .then(() => {
-          expect(cy.findByRole('listitem', /tofu scramble tacos/i)).toExist();
+          expect(cy.findByRole('listitem', /tofu scramble tacos/i)).to.exist;
           })
       })
       

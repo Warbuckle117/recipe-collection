@@ -3,6 +3,16 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from './App';
 
+const setup = () => {
+  const app = render(<App />);
+
+  userEvent.click(app.getByText('Add Recipe'));
+  const instructionsInput = app.getByLabelText('Instructions:')
+  return {
+    instructionsInput,
+  }
+}
+
 test('Add recipe button toggles visibility of a form on the page ', () => {
 
   render(<App />);
@@ -26,23 +36,15 @@ test('typing in the recipe name makes the recipe name appear in the input', asyn
   await userEvent.type(screen.getByLabelText('Recipe name:'), recipeName);
 
   expect(screen.getByLabelText('Recipe name:').value).toEqual(recipeName);
+});
 
-  const setup = () => {
-    const app = render(<App />);
-  
-    userEvent.click(app.getByText('Add Recipe'));
-    const instructionsInput = app.getByLabelText('Instructions:')
-    return {
-      instructionsInput,
-    }
-  }
-  
-  test('typing in the recipe instructions makes the instructions appear in the form', async () => {
-    const {instructionsInput} = setup();
-  
-    const recipeInstructions = "kinda hard to write instructions without knowing what I'm cooking"
-  
-    await userEvent.type(instructionsInput, recipeInstructions)
-    expect(instructionsInput.value).toEqual(recipeInstructions);
-  })
-})
+
+
+test('typing in the recipe instructions makes the instructions appear in the form', async () => {
+  const {instructionsInput} = setup();
+
+  const recipeInstructions = "kinda hard to write instructions without knowing what I'm cooking"
+
+  await userEvent.type(instructionsInput, recipeInstructions)
+  expect(instructionsInput.value).toEqual(recipeInstructions);
+});
