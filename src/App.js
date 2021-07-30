@@ -2,73 +2,68 @@ import './App.css';
 import React from 'react';
 
 class App extends React.Component {
-  state = {
-    isAddRecipeFormDisplayed: false,
-    recipes: [],
-    newRecipeName: '',
-    newRecipeInstructions: ''
-  }
-  handleRecipeName = this.handleRecipeName.bind(this);
-  handleRecipeInstructions = this.handleRecipeInstructions.bind(this);
+  constructor(){
+    super()
+      this.state = {
+        isAddRecipeFormDisplayed: false,
+        recipes: [],
+        newRecipeName: '',
+        newRecipeInstructions: ''
+      }
+  this.handleRecipeName = this.handleRecipeName.bind(this);
+  this.handleRecipeInstructions = this.handleRecipeInstructions.bind(this);
+}
   
-
   toggleAddRecipeForm = () => {
     this.setState({isAddRecipeFormDisplayed: !this.state.isAddRecipeFormDisplayed})
-  
   }
 
   handleRecipeName(event) {
     event.preventDefault();
     //console.log(event.target.value)
     this.setState({newRecipeName: event.target.value});
-
   }
 
   handleRecipeInstructions(event) {
     event.preventDefault();
-    console.log(event.target.value)
+    //console.log(event.target.value)
     this.setState({newRecipeInstructions: event.target.value});
   }
 
   submitRecipe = (event) => {
+    event.preventDefault()
     alert("this is the recipe: \n" + this.state.newRecipeName + "\n" + "this is the recipe instructions: \n" + this.state.newRecipeInstructions)
  
-  this.setState({recipes: [
+  this.state.recipes.push(
       {
         name: this.state.newRecipeName,
         instructions: this.state.newRecipeInstructions
       }
-    ]
-  })
-  console.log(this.state.recipes)
-  alert("this is the recipe: \n" + this.state.recipes[0])
-  event.preventDefault()
+  )
+ console.log(this.state.recipes)
+  alert("this is the recipes name: \n" + this.state.recipes[0].name + "\nthis is the recipes instuctions: \n" + this.state.recipes[0].instructions)
+  this.setState({newRecipeInstructions: ''});
+  this.setState({newRecipeName: ''});
 }
 
-// submitRecipe = (event) => {
-//   event.preventDefault()
-//   this.state.recipes.push({
-//         name: this.state.newRecipeName,
-//         instructions :this.state.newRecipeInstructions
-//   })
-// }
-
-
   render(){
+    //let recipes = this.state.recipes;
     const addNewRecipeForm = (
       <form id="recipe-form" onSubmit={this.submitRecipe}>
         <label htmlFor="newRecipeName">Recipe name: </label>
-        <input type="text" id="newRecipeName" value={this.state.newRecipeName} onChange={this.handleRecipeName}/>
+        <input type="text" 
+          id="newRecipeName" 
+          value={this.state.newRecipeName}
+          placeholder="write recipe name here" 
+          onChange={this.handleRecipeName}/>
         <label htmlFor="newRecipeInstructions">Instructions:</label>
-        <textarea id="newRecipeInstructions" placeholder="write recipe instructions here..." value={this.state.newRecipeInstructions} onChange={this.handleRecipeInstructions}/>
+        <textarea id="newRecipeInstructions" 
+          placeholder="write recipe instructions here..." 
+          value={this.state.newRecipeInstructions}
+          onChange={this.handleRecipeInstructions}/>
         <input type="submit" />
       </form>
     )
-
-    // const addNewRecipeForm = (
-    //   <form id="recipe-form" onSubmit={this.submitRecipe}>
-    //   </form>
-    // )
 
     return (
       <div className="App">
@@ -78,11 +73,25 @@ class App extends React.Component {
            ? addNewRecipeForm
           : <button id="add-recipe" onClick={this.toggleAddRecipeForm}> Add Recipe</button>
         }
-        <p>this is recipes:</p>
+        {
+      this.state.recipes.length > 0 ?
+      <ul>
+        {this.state.recipes.map((item, index)  => { 
+          
+          return( 
+
+          <li id="" key={index}>{item.name}</li>
+          
+          )
+        
+        }
+        )}
+      </ul> :
+      <p>There are no recipes to list.</p>
+      }
       </div>
     )
   }
 }
-
 
 export default App;
