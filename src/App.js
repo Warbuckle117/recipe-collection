@@ -32,8 +32,7 @@ class App extends React.Component {
 
   submitRecipe = (event) => {
     event.preventDefault()
-    alert("this is the recipe: \n" + this.state.newRecipeName + "\n" + "this is the recipe instructions: \n" + this.state.newRecipeInstructions)
- 
+    //alert("this is the recipe: \n" + this.state.newRecipeName + "\n" + "this is the recipe instructions: \n" + this.state.newRecipeInstructions)
   this.state.recipes.push(
       {
         name: this.state.newRecipeName,
@@ -41,7 +40,7 @@ class App extends React.Component {
       }
   )
  console.log(this.state.recipes)
-  alert("this is the recipes name: \n" + this.state.recipes[0].name + "\nthis is the recipes instuctions: \n" + this.state.recipes[0].instructions)
+  //alert("this is the recipes name: \n" + this.state.recipes[0].name + "\nthis is the recipes instuctions: \n" + this.state.recipes[0].instructions)
   this.setState({newRecipeInstructions: ''});
   this.setState({newRecipeName: ''});
 }
@@ -77,13 +76,9 @@ class App extends React.Component {
       this.state.recipes.length > 0 ?
       <ul>
         {this.state.recipes.map((item, index)  => { 
-          
           return( 
-
           <li id="" key={index}>{item.name}</li>
-          
           )
-        
         }
         )}
       </ul> :
